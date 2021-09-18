@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown</title>
+    <style>
+        body{
+            background-color: rgb(35, 39, 48);
+            color : white;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            text-align: center; 
+        }
+
+        @media screen and (min-width:600px) {
+            body{
+                margin-top: 15%;
+            }
+            h1{
+                font-size: 160%;
+            }
+            #remainTime{
+                font-size: 220%;
+            }
+            #date{
+            font-size: 100%;
+            }
+            hr{
+            background-color: white;
+            margin-left: 30%;
+            margin-right: 30%;
+            margin-top: 3%;
+            }
+        }
+
+        @media screen and (max-width:450px) {
+            body{
+                margin-top: 57%;
+            }
+            h1{
+                font-size: 120%;
+            }
+            #remainTime{
+                font-size: 20px;
+            }
+            #date{
+            font-size: 100%;
+            }        
+            hr{
+            background-color: white;
+            margin-left: 30%;
+            margin-right: 30%;
+            margin-top: 6%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Time remaining for the establishment of the company :</h1>
+    <p id="remainTime"> </p>
+    <hr>
+    <p id="date">Establish day : September 1 , 2022</p>
+
+    <script>
+        var date = new Date("Sep 1, 2022 09:00:00").getTime();
+
+        var countdownTimer = setInterval(function () {
+            var now = new Date().getTime();
+
+            var distance = date - now;  
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("remainTime").innerHTML = days + "day : " + hours + "hour : " + minutes + "min : " + seconds + "s";
+        });
+    </script>
+
+</body>
+</html>
