@@ -1,133 +1,540 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>💚 Gökçe 💚</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-<style>
-  body {
-  overflow: hidden;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-color: #eee;
-  transition: background-color 1s ease-in-out;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap</title>
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-sidebar: #070a12;
+            --bg-card: #131c2e;
+            --text-main: #f1f5f9;
+            --text-muted: #64748b;
+            --border: #1e293b;
+            
+            /* Aşama Renk Skalası */
+            --color-p1: #38bdf8; /* Cyan */
+            --color-p2: #3b82f6; /* Blue */
+            --color-p3: #a78bfa; /* Violet */
+            --color-p4: #f43f5e; /* Rose */
+            --color-p5: #fbbf24; /* Amber */
+            --color-p6: #10b981; /* Emerald */
+        }
 
-#c {
-  position: relative;
-  z-index: 1;
-  filter: contrast(3);
-}
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-h1 {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  z-index: 2;
-  color: #eee;
-  transition: color 1s ease-in-out;
-  font-size: 8em;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-p#clickHere {
-  text-transform: uppercase;
-  padding: 1em;
-}
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+        /* Ana Harita Alanı */
+        .container {
+            flex: 1;
+            padding: 50px 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            scroll-behavior: smooth;
+        }
 
+        .header { text-align: center; margin-bottom: 50px; max-width: 700px; }
+        .header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(to right, #38bdf8, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; }
+        .header p { color: var(--text-muted); font-size: 1rem; line-height: 1.6; }
 
+        /* Akış Şeması Konteyneri */
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            width: 100%;
+            max-width: 1000px;
+            padding-bottom: 150px;
+        }
+
+        .block-group {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(19, 28, 46, 0.4) 0%, rgba(11, 15, 25, 0.6) 100%);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .group-title-p1 { color: var(--color-p1); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
+        .group-title-p2 { color: var(--color-p2); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
+        .group-title-p3 { color: var(--color-p3); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
+        .group-title-p4 { color: var(--color-p4); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
+        .group-title-p5 { color: var(--color-p5); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
+        .group-title-p6 { color: var(--color-p6); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .node {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 75px;
+        }
+        
+        /* Node Hover ve Glow Efektleri */
+        .p1-node:hover { border-color: var(--color-p1); box-shadow: 0 0 15px rgba(56, 189, 248, 0.15); }
+        .p2-node:hover { border-color: var(--color-p2); box-shadow: 0 0 15px rgba(59, 130, 246, 0.15); }
+        .p3-node:hover { border-color: var(--color-p3); box-shadow: 0 0 15px rgba(167, 139, 250, 0.15); }
+        .p4-node:hover { border-color: var(--color-p4); box-shadow: 0 0 15px rgba(244, 63, 94, 0.15); }
+        .p5-node:hover { border-color: var(--color-p5); box-shadow: 0 0 15px rgba(251, 191, 36, 0.15); }
+        .p6-node:hover { border-color: var(--color-p6); box-shadow: 0 0 15px rgba(16, 185, 129, 0.15); }
+
+        .node.active { background-color: rgba(30, 41, 59, 0.8); }
+        
+        .node.done {
+            border-color: #10b981 !important;
+            background-color: rgba(16, 185, 129, 0.05) !important;
+            color: #64748b;
+        }
+        .node.done .node-text { text-decoration: line-through; }
+
+        .done-dot { width: 8px; height: 8px; border-radius: 50%; background-color: #64748b; }
+        .node.done .done-dot { background-color: #10b981; box-shadow: 0 0 8px #10b981; }
+
+        .connector-line { width: 2px; height: 35px; background-color: var(--border); }
+
+        /* Sağ Panel (Sidebar) */
+        .sidebar {
+            width: 500px;
+            background-color: var(--bg-sidebar);
+            border-left: 1px solid var(--border);
+            padding: 35px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        }
+
+        .placeholder-text { color: var(--text-muted); text-align: center; margin-top: 50%; font-style: italic; font-size: 0.95rem; }
+
+        .sidebar h2 { font-size: 1.6rem; font-weight: 700; color: #fff; }
+        .sidebar p { color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; }
+        
+        .section-title { font-size: 0.8rem; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-top: 10px; }
+
+        .btn-done {
+            background-color: #1e293b;
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .btn-done:hover { background-color: #2d3748; }
+        .btn-done.is-done { background-color: #10b981; color: #000; border-color: #10b981; }
+
+        .project-card { background: #111827; border-left: 4px solid #10b981; padding: 18px; border-radius: 6px; display: flex; flex-direction: column; gap: 8px; }
+        .project-meta { font-size: 0.75rem; color: #10b981; font-family: monospace; font-weight: bold; }
+        .project-card h4 { font-size: 1rem; color: #fff; }
+        .project-card p { font-size: 0.85rem; color: #94a3b8; }
+
+        .resource-link { display: flex; align-items: center; justify-content: space-between; color: #38bdf8; text-decoration: none; font-size: 0.9rem; background: #131c2e; padding: 12px; border-radius: 6px; border: 1px solid var(--border); transition: all 0.2s; }
+        .resource-link:hover { background: #1e293b; border-color: #38bdf8; }
+    </style>
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<h1 style="font-size: 8em;">Seni Seviyorum Gökçe!</h1>
-<p id="clickHere">Herhangi bir yere dokun. </p>
-<canvas id="c" width="500" height="500"></canvas>
-<!-- partial -->
-  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="./script.js"></script>
-<script>
-  var c 		 = document.getElementById('c');
-var _ 		 = c.getContext('2d');
-var h1 		 = document.querySelector('h1');
-var RAD 	 = Math.PI / 180;
-var speed  = 3;
-var setCanvasSize = function () {
-  c.width  = window.innerWidth;
-  c.height = window.innerHeight;
-};
-var randHeart = function () {
-		   return ["❤","♥"][Math.floor(Math.random() * 2)];
-};
-var Sprite = function (x, y, rot) {
-  this.x    = x || Math.random() * c.width;
-  this.y    = y || Math.random() * c.height;
-  this.rot  = rot || 0;
-  this.c    = 'rgba(238,85,85,1)';
-  this.text = randHeart();
-};
-var items = [new Sprite];
-var shape = function (x, y, text, c) {
-  _.font="5em Arial";
-  _.fillStyle = c;
-  _.fillText(text, x, y);
-};
-var clear = function () {
-  _.clearRect(0,0, c.width, c.height);
-}
-var listen = function () {
-  window.onresize = function () {
-    setCanvasSize();
-  };
-  window.onmousedown = function (e) {
-    items.push(new Sprite(e.x, e.y));
-  };
-  var alpha = 0.1;
-  h1.onclick = function (e) {
-    document.querySelector('p').style.display = "none";
-    h1.style.color = 'rgba(238,85,85,'+alpha+')';
-    document.body.style.backgroundColor = 'rgba(238,85,85,'+alpha+')';
-    if (alpha <= 0.3) {
-      alpha += 0.02;
-    } else {
-      h1.style.color = 'rgb(247,164,164)';
-    }
-    return false;
-  };
-};
-var setup = function () {
-  setCanvasSize();
-  listen();
-}; setup();
-var render = function () {
- 	 clear();  
-  for (var i = 0; i < items.length; i++) {
-    var item = items[i];
-    shape(item.x, item.y, item.text, item.c);
-    item.x += Math.cos(Math.round(Math.random() * item.rot) / RAD) * speed;
-    item.y += Math.sin(Math.round(Math.random() * item.rot) / RAD) * speed;
-    item.rot +=  speed;
-    if (item.y >= c.height || item.y <= 0) item.y = -item.y;
-    if (item.x >= c.width || item.x <= 0) item.x = -item.x;
-  }
-};
-window.requestAnimFrame = (function(){
-  return window.requestAnimationFrame||window.webkitRequestAnimationFrame ||window.mozRequestAnimationFrame||function( callback ){
-    window.setTimeout(callback, 1000 / 60);
-	};
-})();
-(function animloop(){
-  requestAnimFrame(animloop);
-  render();
-})();
-</script>
 
+    <div class="container">
+        <div class="header">
+            <h1>AI Automation & Endpoint Specialist</h1>
+            <p>powered by Mert & Gemini.</p>
+        </div>
+
+        <div class="flow-container">
+            
+            <!-- PHASE 1 -->
+            <div class="block-group">
+                <div class="group-title-p1">Aşama 1: Modern Scripting Foundations & OS Hybrid Engine</div>
+                <div class="grid-layout">
+                    <div class="node p1-node" id="n1" onclick="showDetails('n1')"><span class="node-text">PowerShell Core Runtime</span><div class="done-dot"></div></div>
+                    <div class="node p1-node" id="n2" onclick="showDetails('n2')"><span class="node-text">Python OS Mappings</span><div class="done-dot"></div></div>
+                    <div class="node p1-node" id="n3" onclick="showDetails('n3')"><span class="node-text">Subprocess Interception</span><div class="done-dot"></div></div>
+                    <div class="node p1-node" id="n4" onclick="showDetails('n4')"><span class="node-text">Linux-Windows Interop</span><div class="done-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="connector-line"></div>
+
+            <!-- PHASE 2 -->
+            <div class="block-group">
+                <div class="group-title-p2">Aşama 2: Advanced Data Structures & Text Intelligence</div>
+                <div class="grid-layout">
+                    <div class="node p2-node" id="n5" onclick="showDetails('n5')"><span class="node-text">Regex Pattern Matching</span><div class="done-dot"></div></div>
+                    <div class="node p2-node" id="n6" onclick="showDetails('n6')"><span class="node-text">JSON & XML Schema Parsing</span><div class="done-dot"></div></div>
+                    <div class="node p2-node" id="n7" onclick="showDetails('n7')"><span class="node-text">Log Stream Filtering</span><div class="done-dot"></div></div>
+                    <div class="node p2-node" id="n8" onclick="showDetails('n8')"><span class="node-text">Anomaly Extraction Logic</span><div class="done-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="connector-line"></div>
+
+            <!-- PHASE 3 -->
+            <div class="block-group">
+                <div class="group-title-p3">Aşama 3: Enterprise API Mechanics & Token Operations</div>
+                <div class="grid-layout">
+                    <div class="node p3-node" id="n9" onclick="showDetails('n9')"><span class="node-text">HTTP/REST Architecture</span><div class="done-dot"></div></div>
+                    <div class="node p3-node" id="n10" onclick="showDetails('n10')"><span class="node-text">OAuth 2.0 & Entra ID Auth</span><div class="done-dot"></div></div>
+                    <div class="node p3-node" id="n11" onclick="showDetails('n11')"><span class="node-text">Microsoft Graph Core API</span><div class="done-dot"></div></div>
+                    <div class="node p3-node" id="n12" onclick="showDetails('n12')"><span class="node-text">Intune MDM Query Engine</span><div class="done-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="connector-line"></div>
+
+            <!-- PHASE 4 -->
+            <div class="block-group">
+                <div class="group-title-p4">Aşama 4: Infrastructure Automation & Async Webhooks</div>
+                <div class="grid-layout">
+                    <div class="node p4-node" id="n13" onclick="showDetails('n13')"><span class="node-text">Bulk MDM Operations</span><div class="done-dot"></div></div>
+                    <div class="node p4-node" id="n14" onclick="showDetails('n14')"><span class="node-text">Webhook Orchestration</span><div class="done-dot"></div></div>
+                    <div class="node p4-node" id="n15" onclick="showDetails('n15')"><span class="node-text">Teams/Slack Rich Alerting</span><div class="done-dot"></div></div>
+                    <div class="node p4-node" id="n16" onclick="showDetails('n16')"><span class="node-text">Configuration Drift Watch</span><div class="done-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="connector-line"></div>
+
+            <!-- PHASE 5 -->
+            <div class="block-group">
+                <div class="group-title-p5">Aşama 5: Local LLM Infrastructure & Prompt Engineering</div>
+                <div class="grid-layout">
+                    <div class="node p5-node" id="n17" onclick="showDetails('n17')"><span class="node-text">Ollama Deployment</span><div class="done-dot"></div></div>
+                    <div class="node p5-node" id="n18" onclick="showDetails('n18')"><span class="node-text">System Prompt Customization</span><div class="done-dot"></div></div>
+                    <div class="node p5-node" id="n19" onclick="showDetails('n19')"><span class="node-text">Structured JSON Enforcement</span><div class="done-dot"></div></div>
+                    <div class="node p5-node" id="n20" onclick="showDetails('n20')"><span class="node-text">Log Context Injection</span><div class="done-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="connector-line"></div>
+
+            <!-- PHASE 6 -->
+            <div class="block-group">
+                <div class="group-title-p6">Aşama 6: Agentic Workflows & Self-Healing Masterpiece</div>
+                <div class="grid-layout">
+                    <div class="node p6-node" id="n21" onclick="showDetails('n21')"><span class="node-text">LangChain Function Binding</span><div class="done-dot"></div></div>
+                    <div class="node p6-node" id="n22" onclick="showDetails('n22')"><span class="node-text">Autonomous Diagnostics Agent</span><div class="done-dot"></div></div>
+                    <div class="node p6-node" id="n23" onclick="showDetails('n23')"><span class="node-text">Remediation Script Generator</span><div class="done-dot"></div></div>
+                    <div class="node p6-node" id="n24" onclick="showDetails('n24')"><span class="node-text">The Self-Healing Masterpiece</span><div class="done-dot"></div></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Sağ Panel -->
+    <div class="sidebar" id="sidebar">
+        <div class="placeholder-text" id="placeholder">Detayları, GitHub referans projelerini ve çalışma kaynaklarını görmek için bir adıma tıklayın.</div>
+        <div id="content" style="display: none;">
+            <button class="btn-done" id="btnDone" onclick="toggleNodeDone()">Mark as Done</button>
+            <h2 id="title">Konsept Başlığı</h2>
+            <p id="desc">Açıklama metni.</p>
+            
+            <div class="section-title">GitHub Portfolio Project</div>
+            <div class="project-card">
+                <div class="project-meta" id="projMeta">REPO: name | TECH: tech</div>
+                <h4 id="projTitle">Proje Adı</h4>
+                <p id="projDesc">Proje detayları.</p>
+            </div>
+
+            <div class="section-title">Öğrenme Kaynakları</div>
+            <div id="resources" style="display: flex; flex-direction: column; gap: 8px;">
+                <!-- Linkler -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const db = {
+            n1: {
+                title: "PowerShell Core Runtime Deployment",
+                desc: "Ubuntu üzerinde 'pwsh' komut satırını ayağa kaldırarak, Linux tabanlı bir sistemden kurumsal Microsoft kütüphanelerini yönetme temelidir.",
+                projTitle: "Cross-OS Resource Benchmark",
+                projDesc: "Ubuntu'da çalışıp ram/cpu tüketim verilerini Windows event-log şemasına uyumlu CSV üreten ilk .ps1 scriptini geliştir.",
+                projMeta: "REPO: pwsh-cross-bench | TECH: PowerShell Core, Linux OS",
+                links: [{ name: "MS Docs: Install PowerShell on Ubuntu", url: "https://learn.microsoft.com/en-us/powershell/scripting/install/install-ubuntu" }]
+            },
+            n2: {
+                title: "Python OS Mappings",
+                desc: "Python'un 'os' ve 'sys' modülleri yardımıyla çevre değişkenlerini (environment), dosya sistemi kilitlerini ve izinlerini manipüle etme aşamasıdır.",
+                projTitle: "Secure OS Env Auditor",
+                projDesc: "İşletim sistemindeki tüm env variable'ları tarayıp, içinde şifre/token unutulanları güvenlik politikalarına göre loglayan bir denetçi yaz.",
+                projMeta: "REPO: py-os-auditor | TECH: Python 3, OS Module",
+                links: [{ name: "RealPython: Python OS Module Guide", url: "https://realpython.com/working-with-files-in-python/" }]
+            },
+            n3: {
+                title: "Subprocess Interception & Pipes",
+                desc: "Python içinden harici sistem komutlarını tetiklerken, komut çıktısını (stdout/stderr) anlık yakalayıp bellekte pipe etme yönetimidir.",
+                projTitle: "Live Output Interceptor Wrapper",
+                projDesc: "Arka planda uzun süren bir bash/pwsh komutunu çalıştıran, hata çıktığı an işlemi kesip loglayan akıllı bir komut koşturucu yaz.",
+                projMeta: "REPO: py-subprocess-interceptor | TECH: Python Subprocess, Streams",
+                links: [{ name: "Python Docs: Subprocess API", url: "https://docs.python.org/3/library/subprocess.html" }]
+            },
+            n4: {
+                title: "Linux-Windows Interoperability",
+                desc: "SSH veya WSMan protokolleri üzerinden Linux bir sunucudan uzak bir Windows makinesine güvenli komut gönderme ve otomasyon tüneli kurmadır.",
+                projTitle: "SSH to Windows Command Pipeline",
+                projDesc: "Ubuntu'dan tetiklenip uzak Windows endpoint'te sessizce bir servis durumunu kontrol eden ve sonucu geri döndüren tünel kodunu yaz.",
+                projMeta: "REPO: cross-os-pipeline | TECH: Python Paramiko, OpenSSH",
+                links: [{ name: "Guide: OpenSSH for Windows Setup", url: "https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview" }]
+            },
+            n5: {
+                title: "Regex Pattern Matching for Logs",
+                desc: "Büyük log yığınları arasından sadece sistem hata şablonlarını (0x8007... gibi Windows Update veya deployment hatalarını) Regex ile süzme sanatıdır.",
+                projTitle: "Hex Error Code Extractor",
+                projDesc: "Karmaşık bir SCCM deployment logunu satır satır regex ile tarayıp sadece kritik hata kodlarını yakalayan filtreyi yaz.",
+                projMeta: "REPO: regex-log-extractor | TECH: Python re Module, Regular Expressions",
+                links: [{ name: "Tool: Regex101 Testing Sandbox", url: "https://regex101.com/" }]
+            },
+            n6: {
+                title: "JSON & XML Schema Parsing",
+                desc: "Intune'dan dönen JSON verileri ile eski SCCM konfigürasyonlarından gelen XML şemalarını temiz nesnelere (object) parse etme adımıdır.",
+                projTitle: "Unified Device Schema Converter",
+                projDesc: "Girdi olarak verilen bir XML envanter dosyasını, modern API uyumlu temiz bir JSON dosyasına dönüştüren dönüştürücüyü tamamla.",
+                projMeta: "REPO: schema-xml-json-parser | TECH: Python json, xml.etree",
+                links: [{ name: "W3Schools: JSON Syntax Guide", url: "https://www.w3schools.com/js/js_json_syntax.asp" }]
+            },
+            n7: {
+                title: "Log Stream Filtering Techniques",
+                desc: "Büyük dosyaları ram'i şişirmeden, stream (akış) mantığıyla parça parça okuyup anlık olarak işleme mimarisidir.",
+                projTitle: "Memory-Efficient Log Streamer",
+                projDesc: "500MB'lık bir sistem logunu stream olarak okuyan ve ram tüketimini 10MB'ın altında tutarak arama yapan akıllı sistemi yaz.",
+                projMeta: "REPO: efficient-log-streamer | TECH: Python Generators, Yield",
+                links: [{ name: "RealPython: Python Generators & Yield", url: "https://realpython.com/introduction-to-python-generators/" }]
+            },
+            n8: {
+                title: "Anomaly Extraction Logic",
+                desc: "Logların içindeki normal rutin satırlar ile beklenmeyen çökme loglarını ayırt edecek eşik değer mantığı kurmadır.",
+                projTitle: "Endpoint Anomaly Detector Scriptor",
+                projDesc: "Aynı hata kodunun 5 dakika içinde 3'ten fazla tekrarlanması durumunda alarm durumuna geçen küçük takip kodunu geliştir.",
+                projMeta: "REPO: endpoint-anomaly-detector | TECH: Data Filtering, Timestamps",
+                links: [{ name: "Concept: IT Infrastructure Anomaly Patterns", url: "https://www.google.com/search?q=infrastructure+anomaly+detection" }]
+            },
+            n9: {
+                title: "HTTP/REST Architecture for Infrastructure",
+                desc: "Bulut tabanlı MDM sistemlerinin temel iletişim dilini, HTTP metotlarını (GET, POST, Headers) Postman ile simüle etme adımıdır.",
+                projTitle: "Postman API Interaction Suite",
+                projDesc: "Postman üzerinde bearer token mimarisiyle çalışan ve HTTP status kodlarını test eden temiz bir API test koleksiyonu oluştur.",
+                projMeta: "REPO: rest-api-postman-suite | TECH: Postman, REST Architecture",
+                links: [{ name: "Video: REST API Crash Course", url: "https://www.youtube.com/watch?v=-mN3VyJuCjM" }]
+            },
+            n10: {
+                title: "OAuth 2.0 & Entra ID Authentication",
+                desc: "Azure üzerinde App Registration oluşturup, kod içinden Client ID ve Client Secret kullanarak Microsoft Graph API için token alma operasyonudur.",
+                projTitle: "Automated OAuth Token Fetcher",
+                projDesc: "Microsoft identity platformuna HTTP POST isteği atıp, 3600 saniyelik geçerli access_token üreten Python/PowerShell modülünü yaz.",
+                projMeta: "REPO: entra-token-fetcher | TECH: OAuth 2.0, Microsoft Entra ID",
+                links: [{ name: "MS Learn: Application Authentication Flow", url: "https://learn.microsoft.com/en-us/graph/auth-v2-service" }]
+            },
+            n11: {
+                title: "Microsoft Graph Core API Integration",
+                desc: "Üretilen token'ı HTTP Header'a 'Bearer' olarak gömüp, Microsoft bulut altyapısıyla güvenli el sıkışma aşamasıdır.",
+                projTitle: "Graph API Connection Manager",
+                projDesc: "Token süresi bittiğinde otomatik yenileyen (refresh logic) ve bağlantıyı canlı tutan bir API wrapper sınıfı tasarla.",
+                projMeta: "REPO: graph-connection-manager | TECH: Python Requests, Session",
+                links: [{ name: "MS Graph: API Overview Documentation", url: "https://learn.microsoft.com/en-us/graph/overview" }]
+            },
+            n12: {
+                title: "Intune MDM Query Engine",
+                desc: "Graph API üzerindeki `/deviceManagement/managedDevices` endpoint'ine sorgu atarak canlı envanter verisi çekmedir.",
+                projTitle: "Intune Non-Compliant Device Puller",
+                projDesc: "Şirket ağındaki tüm 'gayri-uyumlu' (non-compliant) mobil ve masaüstü cihazları filtreleyip listeleyen motoru yaz.",
+                projMeta: "REPO: intune-query-engine | TECH: Graph API, OData Filtering",
+                links: [{ name: "Graph Docs: managedDevice Resource", url: "https://learn.microsoft.com/en-us/graph/api/resources/manageddevice" }]
+            },
+            n13: {
+                title: "Bulk MDM Operations Automation",
+                desc: "Tek bir cihaz yerine, binlerce cihaza aynı anda Graph API üzerinden senkronize komut (örneğin uzaktan tarama veya senkronizasyon) göndermedir.",
+                projTitle: "Mass Device Sync Orchestrator",
+                projDesc: "Belirli bir gruba dahil olan tüm cihazları bulup, hepsine arka arkaya 'sync' tetiği gönderen toplu yönetim scriptini yaz.",
+                projMeta: "REPO: bulk-mdm-orchestrator | TECH: Bulk Graph API, Threading",
+                links: [{ name: "Graph Docs: Bulk Actions Guide", url: "https://learn.microsoft.com/en-us/graph/api/resources/intune-devices-bulkmanageddeviceactionresult" }]
+            },
+            n14: {
+                title: "Webhook Orchestration Mechanics",
+                desc: "Sistemde anlık bir olay (hata, uyumsuzluk) tetiklendiğinde, bunu dinleyen sistemlere push mekanizmasıyla anında bildirme tekniğidir.",
+                projTitle: "Custom Webhook Listener Server",
+                projDesc: "Python Flask/FastAPI kullanarak, dışarıdan gelen hata bildirimlerini dinleyen mini bir lokal webhook sunucusu ayağa kaldır.",
+                projMeta: "REPO: local-webhook-listener | TECH: FastAPI, Webhooks",
+                links: [{ name: "Guide: Webhook Architecture", url: "https://pipeline.dev/blog/what-is-a-webhook/" }]
+            },
+            n15: {
+                title: "Teams/Slack Rich Alerting Systems",
+                desc: "Gelen webhook datalarını süsleyip, kurumsal operasyon kanallarına (Slack/Teams) zengin içerikli uyarı kartları (Adaptive Cards) olarak basmadır.",
+                projTitle: "Adaptive Card Notification Engine",
+                projDesc: "Hata kodu, cihaz sahibi ve kritiklik seviyesini şık bir Teams/Slack kart formatına sokup kanala fırlatan otomasyonu yaz.",
+                projMeta: "REPO: rich-alerting-engine | TECH: Adaptive Cards, HTTP POST",
+                links: [{ name: "Slack API: Block Kit Builder", url: "https://api.slack.com/block-kit" }]
+            },
+            n16: {
+                title: "Configuration Drift Watchdog",
+                desc: "Cihazların olması gereken kurumsal ayarlardan (compliance) sapıp sapmadığını (drift) arka planda periyodik denetleme mantığıdır.",
+                projTitle: "Endpoint Drift Audit Sentry",
+                projDesc: "Belirlenen bir cihaz konfigürasyon şablonu ile canlı durumu karşılaştırıp sapma raporu üreten gözcü kodunu tamamla.",
+                projMeta: "REPO: drift-audit-sentry | TECH: State Comparison, Cron/Schedules",
+                links: [{ name: "Concept: Understanding Configuration Drift", url: "https://www.google.com/search?q=configuration+drift+in+it+infrastructure" }]
+            },
+            n17: {
+                title: "Ollama Local Deployment Runtime",
+                desc: "Yapay zeka modellerini kurumsal gizlilik kurallarına uygun olarak, internete veri çıkarmadan yerelde (`localhost`) çalıştırma motorudur.",
+                projTitle: "Llama3 Local Instance Controller",
+                projDesc: "Ubuntu makinesine Ollama kurup Llama3 modelini çek. Modelin API endpoint'ini (`11434`) lokal scriptlerine hazırla.",
+                projMeta: "REPO: local-ollama-controller | TECH: Ollama, Ubuntu Systemd",
+                links: [{ name: "Official Repository: Ollama on GitHub", url: "https://github.com/ollama/ollama" }]
+            },
+            n18: {
+                title: "System Prompt Customization Box",
+                desc: "LLM'e 'Sen kıdemli bir Endpoint Altyapı Mimarı ve SCCM Uzmanısın' rolünü enjekte ederek doğru jargonla konuşmasını sağlama tekniğidir.",
+                projTitle: "SysAdmin Personality Injector",
+                projDesc: "Yapay zekanın gereksiz sohbet cümlelerini kesip, sadece teknik ve operasyonel direktifler vermesini sağlayan sistem promptunu tasarla.",
+                projMeta: "REPO: sysadmin-prompt-injector | TECH: Prompt Engineering, Ollama API",
+                links: [{ name: "Guide: Advanced Prompting Engineering", url: "https://www.promptingguide.ai/" }]
+            },
+            n19: {
+                title: "Structured JSON Enforcement",
+                desc: "Yapay zekanın yanıt olarak düz metin yerine, kod tarafından anında parse edilebilecek katı bir JSON şeması üretmesini sağlama yöntemidir.",
+                projTitle: "AI Raw Log to Schema JSON Converter",
+                projDesc: "Modele karmaşık bir log satırı verip, çıktı olarak sadece hata kodu ve çözüm adımlarını içeren saf JSON objesi üretmesini sağla.",
+                projMeta: "REPO: ai-log-json-enforcer | TECH: Structured Outputs, JSON Schema",
+                links: [{ name: "Guide: LLM Structured Output Invalidation", url: "https://openai.com/index/structured-outputs/" }]
+            },
+            n20: {
+                title: "Log Context Injection Architecture",
+                desc: "Büyük log dosyalarının en kritik satırlarını ayıklayıp, yapay zekanın 4k-8k'lık hafıza sınırına (Context Window) sığacak şekilde besleme tekniğidir.",
+                projTitle: "Smart Log Context Packager",
+                projDesc: "Sadece hata anından 5 satır öncesini ve sonrasını alıp, sistem metrikleriyle birleştirip LLM'e paket halinde sunan akıllı fonksiyonu yaz.",
+                projMeta: "REPO: log-context-packager | TECH: Memory Management, Content Truncation",
+                links: [{ name: "Concept: Understanding LLM Context Windows", url: "https://www.google.com/search?q=llm+context+window+management" }]
+            },
+            n21: {
+                title: "LangChain Function Binding Mechanics",
+                desc: "Yapay zekaya 'Sistem logunu oku', 'Kullanıcıyı sorgula' gibi senin yazdığın gerçek Python/PowerShell fonksiyonlarını birer 'araç' (Tool) olarak tanımlama işidir.",
+                projTitle: "AI Agent Toolbelt Skeleton",
+                projDesc: "LangChain kullanarak, modelin hangi durumda hangi otomasyon fonksiyonunu tetikleyeceğine kendisinin karar verdiği iskeleti kur.",
+                projMeta: "REPO: agent-toolbelt-skeleton | TECH: LangChain Tools, Python",
+                links: [{ name: "DeepLearning Course: LangChain Functions and Tools", url: "https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/" }]
+            },
+            n22: {
+                title: "Autonomous Diagnostics Agent",
+                desc: "Uç noktadan gelen alarm durumunda, ajanın elindeki araçları sırayla kullanarak arızanın kök nedenini (root-cause) bulduğu akıllı beyin aşamasıdır.",
+                projTitle: "Autonomous Triage Investigator",
+                projDesc: "Hata geldiğinde Graph API ile cihaza giden, logu çeken ve arızayı teşhis eden ilk otonom teşhis ajan kodunu tamamla.",
+                projMeta: "REPO: autonomous-triage-agent | TECH: Agentic AI, Orchestration",
+                links: [{ name: "CrewAI: Multi-Agent System Documentation", url: "https://docs.crewai.com/" }]
+            },
+            n23: {
+                title: "Remediation Script Generator Engine",
+                desc: "Teşhis konulan arızayı çözmek için, ajanın yerel LLM vasıtasıyla dinamik ve hatasız bir tamir (remediation) PowerShell/Bash scripti üretmesidir.",
+                projTitle: "Dynamic Fix Script Factory",
+                projDesc: "Hata koduna göre regedit kaydını veya servis durumunu düzeltecek temiz, güvenli ve parametrik PowerShell kodunu üreten motoru yaz.",
+                projMeta: "REPO: fix-script-factory | TECH: Code Generation, Input Validation",
+                links: [{ name: "Concept: Automated Remediation in Enterprise IT", url: "https://www.google.com/search?q=automated+remediation+it+infrastructure" }]
+            },
+            n24: {
+                title: "The Self-Healing Masterpiece Infrastructure",
+                desc: "Yol haritasının zirvesi. Hatayı algılayan, teşhis koyan, tamir kodunu üreten ve Graph API ile cihaza basıp hatayı kapatan %100 otonom dev sistemdir.",
+                projTitle: "Production Ready Self-Healing Network",
+                projDesc: "Aşama 1'den Aşama 6'ya kadar geliştirdiğin tüm modülleri tek bir kusursuz sistem mimarisinde birleştir. GitHub'ına 'Masterpiece' başlığıyla yükle.",
+                projMeta: "REPO: self-healing-masterpiece | TECH: Full-Stack Enterprise AI Automation",
+                links: [{ name: "Portfolio: Share your ultimate masterpiece on LinkedIn!", url: "https://www.linkedin.com/" }]
+            }
+        };
+
+        let currentSelectedNodeId = null;
+
+        // Sayfa yüklendiğinde LocalStorage'dan tamamlanma durumlarını oku
+        window.onload = function() {
+            Object.keys(db).forEach(id => {
+                const status = localStorage.getItem(`ultimate_roadmap_status_${id}`);
+                if (status === 'done') {
+                    document.getElementById(id).classList.add('done');
+                }
+            });
+        };
+
+        function showDetails(id) {
+            currentSelectedNodeId = id;
+            
+            document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
+            const node = document.getElementById(id);
+            node.classList.add('active');
+
+            document.getElementById('placeholder').style.display = 'none';
+            document.getElementById('content').style.display = 'flex';
+            document.getElementById('content').style.flexDirection = 'column';
+            document.getElementById('content').style.gap = '18px';
+
+            const data = db[id];
+            document.getElementById('title').innerText = data.title;
+            document.getElementById('desc').innerText = data.desc;
+            document.getElementById('projTitle').innerText = data.projTitle;
+            document.getElementById('projDesc').innerText = data.projDesc;
+            document.getElementById('projMeta').innerText = data.projMeta;
+
+            const btn = document.getElementById('btnDone');
+            if (node.classList.contains('done')) {
+                btn.innerText = "Completed ✓";
+                btn.classList.add('is-done');
+            } else {
+                btn.innerText = "Mark as Done";
+                btn.classList.remove('is-done');
+            }
+
+            const resContainer = document.getElementById('resources');
+            resContainer.innerHTML = '';
+            data.links.forEach(l => {
+                const a = document.createElement('a');
+                a.className = 'resource-link';
+                a.href = l.url;
+                a.target = '_blank';
+                a.innerHTML = `<span>${l.name}</span> <span>➔</span>`;
+                resContainer.appendChild(a);
+            });
+        }
+
+        function toggleNodeDone() {
+            if (!currentSelectedNodeId) return;
+            const node = document.getElementById(currentSelectedNodeId);
+            node.classList.toggle('done');
+            
+            if (node.classList.contains('done')) {
+                localStorage.setItem(`ultimate_roadmap_status_${currentSelectedNodeId}`, 'done');
+            } else {
+                localStorage.removeItem(`ultimate_roadmap_status_${currentSelectedNodeId}`);
+            }
+            
+            showDetails(currentSelectedNodeId);
+        }
+    </script>
 </body>
 </html>
